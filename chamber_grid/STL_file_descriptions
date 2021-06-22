@@ -1,8 +1,0 @@
-Chambers and grids:
-
-STL parts in mm:
-
-Fillet 20 chamber 1 shelf x 1.stl : Single chamber w/ shelf for grid to rest on and fillet radius = 20
-Fillet 20 chamber 1 shelf x 5.stl : Row of 5 chambers described above. Useful for 3D printing.
-Grid 9.7mm 0.6 holes x1.stl : Single grid w/ diameter = 9.7mm and hole diameter = 0.6 mm
-Grid 9.7mm 0.6 holes x5.stl : Row of 5 grids described above. Useful for 3D printing.
