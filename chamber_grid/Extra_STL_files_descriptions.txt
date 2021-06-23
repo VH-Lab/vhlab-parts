@@ -1,0 +1,14 @@
+fillet 15 chambers with shelves: Row of 3 chambers w/ shelves and w/ fillet radius = 15
+fillet 15 chambers: Row of 3 chambers w/out shelves and w/ fillet radius = 15
+fillet 20 chambers with shelves: Row of 3 chambers w/ shelves and w/ fillet radius = 20
+fillet 20 chambers: Row of 3 chambers w/out shelves and w/ fillet radius = 20
+
+grid 10mm 0.6 holes: Grid w/ diameter = 10mm, hole diameter = 0.6mm
+
+grid chambers 9.6-10mm diameter: Connected grid-and-chamber w/ diameter varied for each grid (9.6mm, 9.7, 9.8, 9.9, 10), no taper
+
+grids 9.6-10mm diameter: Same as above but only grids
+
+25 30 taper: No shelf, taller chamber, varied fillet radius (25, 30) for 2 vertices 
+
+grids .45 .5 .55: Grids with hole diameters varied (.45mm, .5mm, .55mm)
