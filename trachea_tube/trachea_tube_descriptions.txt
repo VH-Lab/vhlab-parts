@@ -12,12 +12,16 @@ Measured from the insertion tip (z = 0):
   (L-6)-(L-5)  1 mm neck, 4 mm OD (gives the barb a shoulder)
   (L-5)-L  respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD, last 2 mm straight 4 mm OD
   Wall thickness 0.5 mm throughout; connector ID 3 mm.
-  Suture tab (ribbed tubes): centred 20 mm from tip, rises 5 mm above rib OD,
-  6 mm long, 1.5 mm thick, 2 mm transverse hole for suture thread.
+  Suture tab (all tubes): rises 3 mm above the tube surface (rib tops on ribbed
+  tubes), 6 mm long, 1.5 mm thick, with a 2 mm transverse hole for suture thread.
+  The hole's bottom edge is flush with the tube surface so the suture pulls
+  toward the animal with no lever arm (no rotational torque on the tube).
+  Centred 20 mm from the tip on the 30 mm tubes and 15 mm from the tip on the
+  25 mm tube (same 10 mm distance from the connector end, clear of the barb).
 
 File                              Tip OD  Body OD  Length  Ribs  Suture tab
-trachea_tube_2.5mm_tip_25mm.stl   2.5     3.5      25      no    no
-trachea_tube_3mm_tip_30mm.stl     3.0     4.0/5.0  30      yes   yes
-trachea_tube_4mm_tip_30mm.stl     4.0     5.0/6.0  30      yes   yes
+trachea_tube_2.5mm_tip_25mm.stl   2.5     3.5      25      no    yes (15 mm)
+trachea_tube_3mm_tip_30mm.stl     3.0     4.0/5.0  30      yes   yes (20 mm)
+trachea_tube_4mm_tip_30mm.stl     4.0     5.0/6.0  30      yes   yes (20 mm)
 
 images/ contains rendered previews (side_profile.png, cutaway.png, all_three.png).

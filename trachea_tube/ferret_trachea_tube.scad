@@ -6,9 +6,9 @@
 //
 // Select a size with the `variant` parameter, e.g. from the command line:
 //   openscad -D variant=0 -o tube_2.5mm.stl ferret_trachea_tube.scad
-// variant = 0 : 2.5 mm tip, 25 mm long, no ribbing, no suture tab
-// variant = 1 : 3.0 mm tip, 30 mm long, ribbed, suture tab
-// variant = 2 : 4.0 mm tip, 30 mm long, ribbed, suture tab
+// variant = 0 : 2.5 mm tip, 25 mm long, no ribbing, suture tab at 15 mm
+// variant = 1 : 3.0 mm tip, 30 mm long, ribbed, suture tab at 20 mm
+// variant = 2 : 4.0 mm tip, 30 mm long, ribbed, suture tab at 20 mm
 // variant = -1: show all three side by side (for viewing only)
 
 variant = -1;
@@ -28,19 +28,18 @@ neck_len      = 1;     // 4 mm OD neck just behind the barb shoulder
 rib_pitch     = 1;     // ribs: 1 mm raised, 1 mm groove
 rib_height    = 0.5;   // radial rib height (OD grows by 1 mm)
 
-tab_pos       = 20;    // suture tab centre, distance from tip
-tab_rise      = 5;     // tab height above the tube surface
+tab_rise      = 3;     // tab height above the tube surface
 tab_len       = 6;     // tab length along the tube
 tab_thick     = 1.5;   // tab thickness
 tab_hole_d    = 2;     // suture hole diameter
 
 $fn = 96;
 
-// [tip OD, body OD, total length, ribbed?, suture tab?]
+// [tip OD, body OD, total length, ribbed?, suture tab centre from tip (0 = none)]
 SIZES = [
-    [2.5, 3.5, 25, false, false],
-    [3.0, 4.0, 30, true,  true ],
-    [4.0, 5.0, 30, true,  true ],
+    [2.5, 3.5, 25, false, 15],
+    [3.0, 4.0, 30, true,  20],
+    [4.0, 5.0, 30, true,  20],
 ];
 
 // ---------------- geometry ----------------
@@ -79,7 +78,7 @@ module trachea_tube(tip_od, body_od, L, ribbed, tab) {
     difference() {
         union() {
             rotate_extrude() polygon(outer);
-            if (tab) suture_tab(ribbed ? rr : rm);
+            if (tab > 0) suture_tab(ribbed ? rr : rm, tab);
         }
         rotate_extrude() polygon(inner);
         // 45 degree bevel at the insertion tip (long point on the tab side)
@@ -89,10 +88,13 @@ module trachea_tube(tip_od, body_od, L, ribbed, tab) {
 }
 
 // Fin along the tube on the +Y side with a transverse hole for suture.
-module suture_tab(r_surf) {
-    r_top = tab_len / 2;                      // rounded top
-    hole_y = r_surf + tab_rise - r_top;
-    translate([0, 0, tab_pos]) difference() {
+// The hole sits right against the tube surface (its bottom edge is flush
+// with the outer surface / rib tops) so the suture pulls toward the
+// animal with minimal lever arm (no rotational torque on the tube).
+module suture_tab(r_surf, z_pos) {
+    hole_y = r_surf + tab_hole_d / 2;         // hole bottom flush with surface
+    r_top = r_surf + tab_rise - hole_y;       // rounded top concentric w/ hole
+    translate([0, 0, z_pos]) difference() {
         hull() {
             translate([-tab_thick/2, 0, -tab_len/2])
                 cube([tab_thick, hole_y, tab_len]);
