@@ -4,19 +4,29 @@
 // Coordinate system: tube axis = Z. Insertion tip (bevel) at z = 0,
 // respirator connector (barb) at z = total length.
 //
-// Select a size with the `variant` parameter, e.g. from the command line:
-//   openscad -D variant=0 -o tube_2.5mm.stl ferret_trachea_tube.scad
-// variant = 0 : 2.5 mm tip, 25 mm long, no ribbing, suture tab at 15 mm
-// variant = 1 : 3.0 mm tip, 30 mm long, ribbed, suture tab at 20 mm
-// variant = 2 : 4.0 mm tip, 30 mm long, ribbed, suture tab at 20 mm
-// variant = -1: show all three side by side (for viewing only)
+// Choose a design from the command line, e.g.:
+//   openscad -D variant=2 -D taper_len=10 -D ext_len=5 -o out.stl ferret_trachea_tube.scad
+//
+// variant  : 0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip,
+//            -1 = show all three side by side (viewing only)
+// taper_len: length of the taper behind the tip (5 = original, 10 = long taper).
+//            A longer taper pushes the ribs/tab/barb back and adds to the length.
+// ext_len  : extra plain tube inserted between the barb and the ribs/tab
+//            (0 = original, 5 = +5 mm). Ribs and tab stay at the same
+//            distance from the tip; the tube gets longer at the connector end.
+//
+// Base lengths (taper_len = 5, ext_len = 0):
+//   2.5 mm tip: 25 mm, no ribbing, suture tab 15 mm from tip
+//   3.0 mm tip: 30 mm, ribbed,     suture tab 20 mm from tip
+//   4.0 mm tip: 30 mm, ribbed,     suture tab 20 mm from tip
 
-variant = -1;
+variant   = -1;
+taper_len = 5;
+ext_len   = 0;
 
 // ---------------- shared parameters ----------------
 wall          = 0.5;   // wall thickness everywhere
 tip_len       = 5;     // straight tip section from insertion end
-expand_len    = 5;     // taper from tip OD to body OD (rib OD if ribbed)
 bevel_angle   = 45;    // insertion bevel (degrees from tube axis)
 
 conn_od       = 4;     // respirator connector OD (ID = conn_od - 2*wall)
@@ -36,7 +46,8 @@ tab_hole_d    = 2;     // suture hole diameter
 
 $fn = 96;
 
-// [tip OD, body OD, total length, ribbed?, suture tab centre from tip (0 = none)]
+// [tip OD, body OD, base length, ribbed?, base suture tab centre from tip (0 = none)]
+// (base = values for taper_len = 5, ext_len = 0)
 SIZES = [
     [2.5, 3.5, 25, false, 15],
     [3.0, 4.0, 30, true,  20],
@@ -44,7 +55,12 @@ SIZES = [
 ];
 
 // ---------------- geometry ----------------
-module trachea_tube(tip_od, body_od, L, ribbed, tab) {
+// total length of a design
+function tube_length(i, taper = 5, ext = 0) = SIZES[i][2] + (taper - 5) + ext;
+
+module trachea_tube(tip_od, body_od, L0, ribbed, tab0, expand_len = 5, ext = 0) {
+    L   = L0 + (expand_len - 5) + ext;          // total length
+    tab = tab0 > 0 ? tab0 + (expand_len - 5) : 0; // tab moves with the ribs
     rt = tip_od / 2;
     rm = body_od / 2;
     rr = rm + rib_height;
@@ -53,8 +69,9 @@ module trachea_tube(tip_od, body_od, L, ribbed, tab) {
     z_body  = tip_len + expand_len;     // start of body
     z_neck  = L - barb_len - neck_len;  // body ends, neck begins
     z_barb  = L - barb_len;             // barb shoulder
+    z_feat  = z_neck - ext;             // end of ribbed region (plain tube after)
 
-    n_rib = ribbed ? floor((z_neck - z_body) / (2 * rib_pitch)) : 0;
+    n_rib = ribbed ? floor((z_feat - z_body) / (2 * rib_pitch)) : 0;
     // each rib: sloped tip-facing side (rm -> rr over rib_ramp) so the tube
     // slides in, square back side to hold the tie. The first rib needs no
     // slope because the taper already runs up to the rib OD.
@@ -112,14 +129,14 @@ module suture_tab(r_surf, z_pos) {
     }
 }
 
-module tube_variant(i) {
+module tube_variant(i, taper = 5, ext = 0) {
     s = SIZES[i];
-    trachea_tube(s[0], s[1], s[2], s[3], s[4]);
+    trachea_tube(s[0], s[1], s[2], s[3], s[4], taper, ext);
 }
 
 if (variant < 0) {
     for (i = [0 : len(SIZES) - 1])
-        translate([i * 15, 0, 0]) tube_variant(i);
+        translate([i * 15, 0, 0]) tube_variant(i, taper_len, ext_len);
 } else {
-    tube_variant(variant);
+    tube_variant(variant, taper_len, ext_len);
 }

@@ -2,27 +2,44 @@ Ferret trachea tubes (VH Lab)
 =============================
 
 Source: ferret_trachea_tube.scad (OpenSCAD, parametric). All dimensions in mm.
-Regenerate an STL with, e.g.:
-  openscad -D variant=2 -o trachea_tube_4mm_tip_30mm.stl ferret_trachea_tube.scad
+Regenerate any STL with, e.g.:
+  openscad -D variant=2 -D taper_len=10 -D ext_len=5 -o out.stl ferret_trachea_tube.scad
+    variant   0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip
+    taper_len 5 (original) or 10 (long taper)
+    ext_len   0 (original) or 5 (+5 mm plain tube between barb and ribs/tab)
 
-Measured from the insertion tip (z = 0):
-  0-5      tip section, 45 degree bevel, OD = tip OD
-  5-10     taper from tip OD to body OD (to rib OD on ribbed tubes, flush with the first rib)
-  10-(L-6) body; on ribbed tubes, alternating 1 mm ribs (body OD + 1) and 1 mm grooves (body OD)
-           each rib's tip-facing side slopes up over 0.6 mm (for insertion); back side is square (holds the tie)
-  (L-6)-(L-5)  1 mm neck, 4 mm OD (gives the barb a shoulder)
-  (L-5)-L  respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD, last 2 mm straight 4 mm OD
+Profile, measured from the insertion tip (z = 0), with T = taper_len, E = ext_len:
+  0-5          tip section, 45 degree bevel, OD = tip OD
+  5-(5+T)      taper from tip OD to body OD (to rib OD on ribbed tubes, flush
+               with the first rib)
+  ribbed region (ribbed tubes): alternating 1 mm ribs (body OD + 1) and 1 mm
+               grooves (body OD); each rib's tip-facing side slopes up over
+               0.6 mm (eases insertion), back side is square (holds the tie)
+  E mm         plain tube at body OD (only when E > 0)
+  1 mm         neck, 4 mm OD (gives the barb a shoulder)
+  last 5 mm    respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD,
+               last 2 mm straight 4 mm OD
   Wall thickness 0.5 mm throughout; connector ID 3 mm.
   Suture tab (all tubes): rises 3 mm above the tube surface (rib tops on ribbed
-  tubes), 6 mm long, 1.5 mm thick, with a 2 mm transverse hole for suture thread.
-  The hole's bottom edge is flush with the tube surface so the suture pulls
-  toward the animal with no lever arm (no rotational torque on the tube).
-  Centred 20 mm from the tip on the 30 mm tubes and 15 mm from the tip on the
-  25 mm tube (same 10 mm distance from the connector end, clear of the barb).
+  tubes), 6 mm long, 1.5 mm thick, 2 mm transverse hole whose bottom edge is
+  flush with the tube surface, so the suture pulls toward the animal with no
+  lever arm. Centre is 20 mm from the tip (3.0/4.0 mm) or 15 mm (2.5 mm) with
+  the 5 mm taper; a 10 mm taper moves it (and the ribs) 5 mm further back.
 
-File                              Tip OD  Body OD  Length  Ribs  Suture tab
-trachea_tube_2.5mm_tip_25mm.stl   2.5     3.5      25      no    yes (15 mm)
-trachea_tube_3mm_tip_30mm.stl     3.0     4.0/5.0  30      yes   yes (20 mm)
-trachea_tube_4mm_tip_30mm.stl     4.0     5.0/6.0  30      yes   yes (20 mm)
+Body OD: 3.5 (2.5 mm tip, unribbed), 4.0/5.0 groove/rib (3.0 mm tip),
+5.0/6.0 groove/rib (4.0 mm tip).
 
-images/ contains rendered previews (side_profile.png, cutaway.png, all_three.png, rib_closeup.png).
+stl/ -- one file per design, named trachea_tube_<tip>_taper<T>_ext<E>_L<length>.stl
+  Tip    T5 E0 (original)  T10 E0    T5 E5     T10 E5
+  2.5    L25               L30       L30       L35
+  3.0    L30               L35       L35       L40
+  4.0    L30               L35       L35       L40
+
+test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
+  comparison print. Tubes stand connector-end down, bevel tip up, each on 4
+  breakaway pegs touching only the flat exit face of the connector. Labels
+  read "<tip> T<taper> E<ext>". Print the base flat on the build platform;
+  snap or clip each tube off at the peg tips and sand the exit face flat.
+
+images/ -- rendered previews (side_profile.png, cutaway.png, all_three.png,
+  rib_closeup.png show the original T5 E0 designs; test_plate.png the plate).
