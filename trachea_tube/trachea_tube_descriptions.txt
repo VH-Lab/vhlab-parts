@@ -41,5 +41,11 @@ test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
   read "<tip> T<taper> E<ext>". Print the base flat on the build platform;
   snap or clip each tube off at the peg tips and sand the exit face flat.
 
-images/ -- rendered previews (side_profile.png, cutaway.png, all_three.png,
-  rib_closeup.png show the original T5 E0 designs; test_plate.png the plate, test_plate_pegs.png the support pegs).
+images/ -- rendered previews:
+  side_profile.png   all 12 designs side by side, suture tab in profile
+  cutaway.png        same layout, cut in half to show bore, bevel and suture hole
+  all_variants.png   3D overview of all 12 designs
+  rib_closeup.png    sawtooth ribs and suture tab (4.0 mm tip, original)
+  test_plate.png     the 12-design test print plate
+  test_plate_pegs.png  breakaway support pegs under one tube
+  preview_views.scad   layout used to render the side/cutaway/3D images
