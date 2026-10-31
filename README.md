@@ -45,7 +45,7 @@ generates every size and variant.
 | `ferret_trachea_tube.scad` | Parametric design. Edit this to change dimensions |
 | `stl/` | One print-ready STL per design, e.g. `trachea_tube_3mm_taper10_ext5_L40mm.stl` (tip, taper, extension, total length) |
 | `test_plate.scad` / `test_plate.stl` | All 12 designs on one labeled base for a comparison print. Tubes stand connector-end down on breakaway pegs |
-| `trachea_tube_descriptions.txt` | Full dimensions, naming key and printing notes |
+| `trachea_tube_descriptions.txt` | Full dimensions, naming key and test plate details |
 | `images/` | Rendered previews (side profile, cut-away, 3D overview, rib close-up, test plate) |
 
 **Regenerating an STL** after editing the design:
