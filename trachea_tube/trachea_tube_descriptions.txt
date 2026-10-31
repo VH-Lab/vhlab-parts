@@ -1,0 +1,51 @@
+Ferret trachea tubes (VH Lab)
+=============================
+
+Source: ferret_trachea_tube.scad (OpenSCAD, parametric). All dimensions in mm.
+Regenerate any STL with, e.g.:
+  openscad -D variant=2 -D taper_len=10 -D ext_len=5 -o out.stl ferret_trachea_tube.scad
+    variant   0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip
+    taper_len 5 (original) or 10 (long taper)
+    ext_len   0 (original) or 5 (+5 mm plain tube between barb and ribs/tab)
+
+Profile, measured from the insertion tip (z = 0), with T = taper_len, E = ext_len:
+  0-5          tip section, 45 degree bevel, OD = tip OD
+  5-(5+T)      taper from tip OD to body OD (to rib OD on ribbed tubes, flush
+               with the first rib)
+  ribbed region (ribbed tubes): alternating 1 mm ribs (body OD + 1) and 1 mm
+               grooves (body OD); each rib's tip-facing side slopes up over
+               0.6 mm (eases insertion), back side is square (holds the tie)
+  E mm         plain tube at body OD (only when E > 0)
+  1 mm         neck, 4 mm OD (gives the barb a shoulder)
+  last 5 mm    respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD,
+               last 2 mm straight 4 mm OD
+  Wall thickness 0.5 mm throughout; connector ID 3 mm.
+  Suture tab (all tubes): rises 3 mm above the tube surface (rib tops on ribbed
+  tubes), 6 mm long, 1.5 mm thick, 2 mm transverse hole whose bottom edge is
+  flush with the tube surface, so the suture pulls toward the animal with no
+  lever arm. Centre is 20 mm from the tip (3.0/4.0 mm) or 15 mm (2.5 mm) with
+  the 5 mm taper; a 10 mm taper moves it (and the ribs) 5 mm further back.
+
+Body OD: 3.5 (2.5 mm tip, unribbed), 4.0/5.0 groove/rib (3.0 mm tip),
+5.0/6.0 groove/rib (4.0 mm tip).
+
+stl/ -- one file per design, named trachea_tube_<tip>_taper<T>_ext<E>_L<length>.stl
+  Tip    T5 E0 (original)  T10 E0    T5 E5     T10 E5
+  2.5    L25               L30       L30       L35
+  3.0    L30               L35       L35       L40
+  4.0    L30               L35       L35       L40
+
+test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
+  comparison print. Tubes stand connector-end down, bevel tip up, each on 6
+  breakaway pegs (0.8 mm contact) touching only the flat exit face of the connector. Labels
+  read "<tip> T<taper> E<ext>". Print the base flat on the build platform;
+  snap or clip each tube off at the peg tips and sand the exit face flat.
+
+images/ -- rendered previews:
+  side_profile.png   all 12 designs side by side, suture tab in profile
+  cutaway.png        same layout, cut in half to show bore, bevel and suture hole
+  all_variants.png   3D overview of all 12 designs
+  rib_closeup.png    sawtooth ribs and suture tab (4.0 mm tip, original)
+  test_plate.png     the 12-design test print plate
+  test_plate_pegs.png  breakaway support pegs under one tube
+  preview_views.scad   layout used to render the side/cutaway/3D images
