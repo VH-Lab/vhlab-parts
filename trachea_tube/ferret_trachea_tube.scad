@@ -16,7 +16,7 @@ variant = -1;
 // ---------------- shared parameters ----------------
 wall          = 0.5;   // wall thickness everywhere
 tip_len       = 5;     // straight tip section from insertion end
-expand_len    = 5;     // length of the taper from tip OD to body OD
+expand_len    = 5;     // taper from tip OD to body OD (rib OD if ribbed)
 bevel_angle   = 45;    // insertion bevel (degrees from tube axis)
 
 conn_od       = 4;     // respirator connector OD (ID = conn_od - 2*wall)
@@ -61,8 +61,10 @@ module trachea_tube(tip_od, body_od, L, ribbed, tab) {
         [rm, z_body + (2*i + 2)*rib_pitch] ] ];
 
     outer = concat(
-        [[0, 0], [rt, 0], [rt, tip_len], [rm, z_body]],
-        ribbed ? ribs : [],
+        // on ribbed tubes the taper runs out to the rib OD, flush with the
+        // first rib, so the tube slides in without catching on that rib
+        [[0, 0], [rt, 0], [rt, tip_len]],
+        ribbed ? ribs : [[rm, z_body]],
         [[rm, z_neck], [rc, z_neck], [rc, z_barb],
          [rb, z_barb], [rc, L - barb_flat], [rc, L], [0, L]]);
 

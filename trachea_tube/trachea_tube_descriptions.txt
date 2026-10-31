@@ -7,7 +7,7 @@ Regenerate an STL with, e.g.:
 
 Measured from the insertion tip (z = 0):
   0-5      tip section, 45 degree bevel, OD = tip OD
-  5-10     taper from tip OD to body OD
+  5-10     taper from tip OD to body OD (to rib OD on ribbed tubes, flush with the first rib)
   10-(L-6) body; on ribbed tubes, alternating 1 mm ribs (body OD + 1) and 1 mm grooves (body OD)
   (L-6)-(L-5)  1 mm neck, 4 mm OD (gives the barb a shoulder)
   (L-5)-L  respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD, last 2 mm straight 4 mm OD
