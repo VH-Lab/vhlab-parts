@@ -36,10 +36,10 @@ stl/ -- one file per design, named trachea_tube_<tip>_taper<T>_ext<E>_L<length>.
   4.0    L30               L35       L35       L40
 
 test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
-  comparison print. Tubes stand connector-end down, bevel tip up, each on 4
-  breakaway pegs touching only the flat exit face of the connector. Labels
+  comparison print. Tubes stand connector-end down, bevel tip up, each on 6
+  breakaway pegs (0.8 mm contact) touching only the flat exit face of the connector. Labels
   read "<tip> T<taper> E<ext>". Print the base flat on the build platform;
   snap or clip each tube off at the peg tips and sand the exit face flat.
 
 images/ -- rendered previews (side_profile.png, cutaway.png, all_three.png,
-  rib_closeup.png show the original T5 E0 designs; test_plate.png the plate).
+  rib_closeup.png show the original T5 E0 designs; test_plate.png the plate, test_plate_pegs.png the support pegs).

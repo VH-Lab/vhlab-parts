@@ -9,7 +9,7 @@
 //   T10 E5 = both
 //
 // Tubes stand connector-end DOWN, bevel tip UP, so nothing touches the
-// tip, ribs, tab or barb. Each tube sits on 4 small breakaway pegs that
+// tip, ribs, tab or barb. Each tube sits on 6 small breakaway pegs that
 // touch only the flat exit face of the connector -- the one surface where
 // a witness mark does no harm. Snap/clip each tube off at the narrow peg
 // tips and sand the exit face flat.
@@ -20,10 +20,10 @@ use <ferret_trachea_tube.scad>
 
 base_t      = 2;     // base plate thickness
 peg_h       = 2.5;   // gap between plate and tube exit face (lets resin drain)
-peg_base_d  = 1.4;
-peg_tip_d   = 0.6;   // contact diameter on the tube (break point)
+peg_base_d  = 1.5;   // 6 pegs on r=1.75 are 1.75 apart: keep gaps for drainage
+peg_tip_d   = 0.8;   // contact diameter on the tube (break point)
 peg_r       = 1.75;  // pegs centred on the 0.5 mm exit wall (ID 3 / OD 4)
-n_pegs      = 4;
+n_pegs      = 6;
 
 pitch_x     = 18;
 pitch_y     = 20;
@@ -68,7 +68,7 @@ for (r = [0 : len(TIPS) - 1], c = [0 : len(VARIANTS) - 1]) {
     translate([c * pitch_x, r * pitch_y, 0]) {
         // pegs
         for (k = [0 : n_pegs - 1])
-            rotate(45 + k * 360 / n_pegs) translate([peg_r, 0, base_t]) peg();
+            rotate(k * 360 / n_pegs) translate([peg_r, 0, base_t]) peg();
         // tube, flipped so the connector exit face rests on the pegs
         translate([0, 0, base_t + peg_h + L]) rotate([0, 180, 0])
             tube_variant(r, t, e);
