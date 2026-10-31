@@ -27,6 +27,7 @@ neck_len      = 1;     // 4 mm OD neck just behind the barb shoulder
 
 rib_pitch     = 1;     // ribs: 1 mm raised, 1 mm groove
 rib_height    = 0.5;   // radial rib height (OD grows by 1 mm)
+rib_ramp      = 0.6;   // axial length of the sloped tip-facing side of each rib
 
 tab_rise      = 3;     // tab height above the tube surface
 tab_len       = 6;     // tab length along the tube
@@ -54,8 +55,11 @@ module trachea_tube(tip_od, body_od, L, ribbed, tab) {
     z_barb  = L - barb_len;             // barb shoulder
 
     n_rib = ribbed ? floor((z_neck - z_body) / (2 * rib_pitch)) : 0;
+    // each rib: sloped tip-facing side (rm -> rr over rib_ramp) so the tube
+    // slides in, square back side to hold the tie. The first rib needs no
+    // slope because the taper already runs up to the rib OD.
     ribs = [ for (i = [0 : n_rib - 1]) each [
-        [rr, z_body + 2*i*rib_pitch],
+        [rr, z_body + 2*i*rib_pitch + (i == 0 ? 0 : rib_ramp)],
         [rr, z_body + (2*i + 1)*rib_pitch],
         [rm, z_body + (2*i + 1)*rib_pitch],
         [rm, z_body + (2*i + 2)*rib_pitch] ] ];

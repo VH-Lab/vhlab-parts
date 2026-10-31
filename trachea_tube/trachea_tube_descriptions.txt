@@ -9,6 +9,7 @@ Measured from the insertion tip (z = 0):
   0-5      tip section, 45 degree bevel, OD = tip OD
   5-10     taper from tip OD to body OD (to rib OD on ribbed tubes, flush with the first rib)
   10-(L-6) body; on ribbed tubes, alternating 1 mm ribs (body OD + 1) and 1 mm grooves (body OD)
+           each rib's tip-facing side slopes up over 0.6 mm (for insertion); back side is square (holds the tie)
   (L-6)-(L-5)  1 mm neck, 4 mm OD (gives the barb a shoulder)
   (L-5)-L  respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD, last 2 mm straight 4 mm OD
   Wall thickness 0.5 mm throughout; connector ID 3 mm.
@@ -24,4 +25,4 @@ trachea_tube_2.5mm_tip_25mm.stl   2.5     3.5      25      no    yes (15 mm)
 trachea_tube_3mm_tip_30mm.stl     3.0     4.0/5.0  30      yes   yes (20 mm)
 trachea_tube_4mm_tip_30mm.stl     4.0     5.0/6.0  30      yes   yes (20 mm)
 
-images/ contains rendered previews (side_profile.png, cutaway.png, all_three.png).
+images/ contains rendered previews (side_profile.png, cutaway.png, all_three.png, rib_closeup.png).
