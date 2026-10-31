@@ -1,0 +1,23 @@
+Ferret trachea tubes (VH Lab)
+=============================
+
+Source: ferret_trachea_tube.scad (OpenSCAD, parametric). All dimensions in mm.
+Regenerate an STL with, e.g.:
+  openscad -D variant=2 -o trachea_tube_4mm_tip_30mm.stl ferret_trachea_tube.scad
+
+Measured from the insertion tip (z = 0):
+  0-5      tip section, 45 degree bevel, OD = tip OD
+  5-10     taper from tip OD to body OD
+  10-(L-6) body; on ribbed tubes, alternating 1 mm ribs (body OD + 1) and 1 mm grooves (body OD)
+  (L-6)-(L-5)  1 mm neck, 4 mm OD (gives the barb a shoulder)
+  (L-5)-L  respirator connector barb: 5 mm OD shoulder tapering to 4 mm OD, last 2 mm straight 4 mm OD
+  Wall thickness 0.5 mm throughout; connector ID 3 mm.
+  Suture tab (ribbed tubes): centred 20 mm from tip, rises 5 mm above rib OD,
+  6 mm long, 1.5 mm thick, 2 mm transverse hole for suture thread.
+
+File                              Tip OD  Body OD  Length  Ribs  Suture tab
+trachea_tube_2.5mm_tip_25mm.stl   2.5     3.5      25      no    no
+trachea_tube_3mm_tip_30mm.stl     3.0     4.0/5.0  30      yes   yes
+trachea_tube_4mm_tip_30mm.stl     4.0     5.0/6.0  30      yes   yes
+
+images/ contains rendered previews (side_profile.png, cutaway.png, all_three.png).
