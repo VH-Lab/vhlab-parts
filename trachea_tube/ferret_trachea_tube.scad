@@ -8,7 +8,8 @@
 //   openscad -D variant=2 -D taper_len=10 -D ext_len=5 -o out.stl ferret_trachea_tube.scad
 //
 // variant  : 0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip,
-//            -1 = show all three side by side (viewing only)
+//            3 = 2.0 mm tip, 4 = 3.5 mm tip (added for the V2 test plate),
+//            -1 = show all sizes side by side (viewing only)
 // taper_len: length of the taper behind the tip (5 = original, 10 = long taper).
 //            A longer taper pushes the ribs/tab/barb back and adds to the length.
 // ext_len  : extra plain tube inserted between the barb and the ribs/tab
@@ -19,7 +20,9 @@
 //   2.5 mm tip: 25 mm, no ribbing, suture tab 15 mm from tip
 //   3.0 mm tip: 30 mm, ribbed,     suture tab 20 mm from tip
 //   4.0 mm tip: 30 mm, ribbed,     suture tab 20 mm from tip
-
+//   2.0 mm tip: 25 mm, no ribbing, suture tab 15 mm from tip
+//   3.5 mm tip: 30 mm, ribbed,     suture tab 20 mm from tip
+// Body OD is tip OD + 1 mm on every size (ribs add another 1 mm).
 variant   = -1;
 taper_len = 5;
 ext_len   = 0;
@@ -52,6 +55,8 @@ SIZES = [
     [2.5, 3.5, 25, false, 15],
     [3.0, 4.0, 30, true,  20],
     [4.0, 5.0, 30, true,  20],
+    [2.0, 3.0, 25, false, 15],   // V2
+    [3.5, 4.5, 30, true,  20],   // V2
 ];
 
 // ---------------- geometry ----------------
