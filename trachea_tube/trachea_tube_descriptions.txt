@@ -4,7 +4,8 @@ Ferret trachea tubes (VH Lab)
 Source: ferret_trachea_tube.scad (OpenSCAD, parametric). All dimensions in mm.
 Regenerate any STL with, e.g.:
   openscad -D variant=2 -D taper_len=10 -D ext_len=5 -o out.stl ferret_trachea_tube.scad
-    variant   0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip
+    variant   0 = 2.5 mm tip, 1 = 3.0 mm tip, 2 = 4.0 mm tip,
+              3 = 2.0 mm tip, 4 = 3.5 mm tip (V2)
     taper_len 5 (original) or 10 (long taper)
     ext_len   0 (original) or 5 (+5 mm plain tube between barb and ribs/tab)
 
@@ -23,17 +24,20 @@ Profile, measured from the insertion tip (z = 0), with T = taper_len, E = ext_le
   Suture tab (all tubes): rises 3 mm above the tube surface (rib tops on ribbed
   tubes), 6 mm long, 1.5 mm thick, 2 mm transverse hole whose bottom edge is
   flush with the tube surface, so the suture pulls toward the animal with no
-  lever arm. Centre is 20 mm from the tip (3.0/4.0 mm) or 15 mm (2.5 mm) with
+  lever arm. Centre is 20 mm from the tip (3.0/3.5/4.0 mm) or 15 mm (2.0/2.5 mm) with
   the 5 mm taper; a 10 mm taper moves it (and the ribs) 5 mm further back.
 
-Body OD: 3.5 (2.5 mm tip, unribbed), 4.0/5.0 groove/rib (3.0 mm tip),
-5.0/6.0 groove/rib (4.0 mm tip).
+Body OD: 3.0 (2.0 mm tip, unribbed), 3.5 (2.5 mm tip, unribbed),
+4.0/5.0 groove/rib (3.0 mm tip), 4.5/5.5 groove/rib (3.5 mm tip),
+5.0/6.0 groove/rib (4.0 mm tip). Tip ID = tip OD - 1 (1.0 mm on the 2.0 mm tip).
 
 stl/ -- one file per design, named trachea_tube_<tip>_taper<T>_ext<E>_L<length>.stl
   Tip    T5 E0 (original)  T10 E0    T5 E5     T10 E5
   2.5    L25               L30       L30       L35
   3.0    L30               L35       L35       L40
   4.0    L30               L35       L35       L40
+  2.0    -                 -         L30       L35    (V2, E5 only)
+  3.5    -                 -         L35       L40    (V2, E5 only)
 
 test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
   comparison print. Tubes stand connector-end down, bevel tip up, each on 6
@@ -41,11 +45,17 @@ test_plate.scad / test_plate.stl -- all 12 designs on one labeled base for a
   read "<tip> T<taper> E<ext>". Print the base flat on the build platform;
   snap or clip each tube off at the peg tips and sand the exit face flat.
 
+test_plate_v2.scad / test_plate_v2.stl -- V2 comparison print, after the
+  first round of testing: E5 only (E0 dropped), with 2.0 and 3.5 mm tips
+  added. 10 designs: columns 2.0, 2.5, 3.0, 3.5, 4.0 mm tip (left to right),
+  rows T5 (front) and T10 (back). Same pegs, labels and printing as V1.
+
 images/ -- rendered previews:
   side_profile.png   all 12 designs side by side, suture tab in profile
   cutaway.png        same layout, cut in half to show bore, bevel and suture hole
   all_variants.png   3D overview of all 12 designs
   rib_closeup.png    sawtooth ribs and suture tab (4.0 mm tip, original)
   test_plate.png     the 12-design test print plate
+  test_plate_v2.png  the 10-design V2 test print plate
   test_plate_pegs.png  breakaway support pegs under one tube
   preview_views.scad   layout used to render the side/cutaway/3D images
